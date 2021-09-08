@@ -5,7 +5,8 @@ import { fetchPosts } from "./actions/postsAction";
 function Postscontainer({ posts, fetching, error, fetchPosts }) {
   useEffect(() => {
     fetchPosts();
-  }, []);
+  }, [fetchPosts]);
+
   return (
     <div>
       <h1>Posts</h1>
