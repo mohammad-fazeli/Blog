@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { fetchPosts } from "./actions/postsAction";
+import PostList from "./components/PostList";
+import { PostHeader } from "./components/styled.components";
 
 function Postscontainer({ posts, fetching, error, fetchPosts }) {
   useEffect(() => {
@@ -9,13 +11,10 @@ function Postscontainer({ posts, fetching, error, fetchPosts }) {
 
   return (
     <div>
-      <h1>Posts</h1>
-      {posts.map((post) => (
-        <div key={post.id}>
-          <h3>{post.title}</h3>
-          <p>{post.body}</p>
-        </div>
-      ))}
+      <PostHeader>
+        <h1>Posts</h1>
+      </PostHeader>
+      <PostList posts={posts} />
     </div>
   );
 }
