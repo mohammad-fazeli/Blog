@@ -6,6 +6,7 @@ const handleSuccess = ({ response, type, next }) => {
   next({
     data: response.data,
     type,
+    ...response,
   });
 };
 const handleFailed = ({ error, type, next }) => {
