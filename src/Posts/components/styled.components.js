@@ -7,6 +7,23 @@ export const PostListRoot = styled.div`
     margin: 10px;
     box-shadow: 2px 2px 4px #000;
   }
+  footer {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    button {
+      cursor: pointer;
+      background: none;
+      outline: none;
+      border: none;
+      font-size: 16px;
+      color: red;
+    }
+    button:hover {
+      color: #333;
+    }
+  }
 `;
 
 export const PostHeader = styled.div`

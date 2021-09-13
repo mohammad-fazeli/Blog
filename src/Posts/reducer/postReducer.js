@@ -5,6 +5,8 @@ const initState = {
   posts: [],
   fetching: false,
   count: 0,
+  deleteing: false,
+  deleteEroor: null,
 };
 const postReducer = (state = initState, action) => {
   switch (action.type) {
@@ -30,6 +32,25 @@ const postReducer = (state = initState, action) => {
         fetching: false,
         error: action.error,
       };
+    case Types.DELETE_POSTS:
+      return {
+        ...state,
+        deleteing: true,
+      };
+    case Types.DELETE_POSTS_SUCCESS:
+      console.log("delete:", action.id);
+      return {
+        ...state,
+        deleteing: false,
+        posts: state.posts.filter((post) => post.id !== action.id),
+      };
+    case Types.DELETE_POSTS_FAILED:
+      return {
+        ...state,
+        deleteing: false,
+        deleteEroor: action.eroor,
+      };
+
     default:
       return state;
   }

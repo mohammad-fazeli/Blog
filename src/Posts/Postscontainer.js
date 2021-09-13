@@ -1,11 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { fetchPosts } from "./actions/postsAction";
+import { fetchPosts, deletePost } from "./actions/postsAction";
 import PostList from "./components/PostList";
 import { PostHeader } from "./components/styled.components";
 import Pagination from "./components/Pagination";
 
-function Postscontainer({ posts, fetching, error, fetchPosts, count }) {
+function Postscontainer({
+  posts,
+  fetching,
+  error,
+  fetchPosts,
+  count,
+  deletePost,
+}) {
   const [pagination, setPagination] = useState({ limit: 5, page: 1 });
 
   useEffect(() => {
@@ -25,7 +32,7 @@ function Postscontainer({ posts, fetching, error, fetchPosts, count }) {
         <h1>Posts</h1>
       </PostHeader>
       {PaginationComponent}
-      <PostList posts={posts} />
+      <PostList posts={posts} deletePost={deletePost} />
       {PaginationComponent}
     </div>
   );
@@ -42,6 +49,7 @@ const mapStateToProps = ({ posts, fetching, error, count }) => {
 
 const mapDispatchToProps = {
   fetchPosts,
+  deletePost,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Postscontainer);
