@@ -9,11 +9,18 @@ const handleSuccess = ({ response, type, next, reduxData }) => {
     ...response,
     ...reduxData,
   });
+
+  return new Promise((resolve, reject) => {
+    resolve(response);
+  });
 };
 const handleFailed = ({ error, type, next }) => {
   next({
     error,
     type,
+  });
+  return new Promise((resolve, reject) => {
+    reject(error);
   });
 };
 
@@ -24,7 +31,7 @@ const apiMiddleware = (store) => (next) => (action) => {
     const { method, type, successType, failedType, reduxData = {} } = action;
     next({ type });
 
-    axios(`${basedURL}${action.endpoint}`, {
+    return axios(`${basedURL}${action.endpoint}`, {
       method,
     })
       .then((response) =>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { fetchPosts, deletePost } from "./actions/postsAction";
+import { fetchPosts, deletePostAndFetch } from "./actions/postsAction";
 import PostList from "./components/PostList";
 import { PostHeader } from "./components/styled.components";
 import Pagination from "./components/Pagination";
@@ -11,7 +11,7 @@ function Postscontainer({
   error,
   fetchPosts,
   count,
-  deletePost,
+  deletePostAndFetch,
 }) {
   const [pagination, setPagination] = useState({ limit: 5, page: 1 });
 
@@ -26,6 +26,11 @@ function Postscontainer({
       setPagination={setPagination}
     />
   );
+
+  const deletePost = (id) => {
+    deletePostAndFetch(id, pagination);
+  };
+
   return (
     <div>
       <PostHeader>
@@ -49,7 +54,7 @@ const mapStateToProps = ({ posts, fetching, error, count }) => {
 
 const mapDispatchToProps = {
   fetchPosts,
-  deletePost,
+  deletePostAndFetch,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Postscontainer);
