@@ -35,6 +35,28 @@ export const editPost = (postObject) => {
   };
 };
 
+export const addPost = (postObject) => {
+  return {
+    type: Types.ADD_POSTS,
+    successType: Types.ADD_POSTS_SUCCESS,
+    failedType: Types.ADD_POSTS_FAILED,
+    isEndpointCall: true,
+    endpoint: `posts`,
+    method: "POST",
+    data: postObject,
+  };
+};
+
+export const addPosstAndFetch = (postObject, filter) => {
+  return (dispatch) => {
+    dispatch(addPost(postObject)).then((response) => {
+      if (response.status === 201) {
+        dispatch(fetchPosts(filter));
+      }
+    });
+  };
+};
+
 export const editPostAndFetch = (postObject, filter) => {
   return (dispatch) => {
     dispatch(editPost(postObject)).then((response) => {

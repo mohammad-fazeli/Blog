@@ -4,11 +4,12 @@ import {
   fetchPosts,
   deletePostAndFetch,
   editPostAndFetch,
+  addPosstAndFetch,
 } from "./actions/postsAction";
 import PostList from "./components/PostList";
 import { PostHeader } from "./components/styled.components";
 import Pagination from "./components/Pagination";
-
+import AddNewPostModal from "./components/AddPost/AddNewPostModal";
 function Postscontainer({
   posts,
   fetching,
@@ -17,6 +18,7 @@ function Postscontainer({
   count,
   deletePostAndFetch,
   editPostAndFetch,
+  addPosstAndFetch,
 }) {
   const [pagination, setPagination] = useState({ limit: 5, page: 1 });
 
@@ -40,11 +42,17 @@ function Postscontainer({
     editPostAndFetch(postObject, pagination);
   };
 
+  const addPost = (postObject) => {
+    addPosstAndFetch(postObject, pagination);
+  };
+
   return (
     <div>
       <PostHeader>
         <h1>Posts</h1>
       </PostHeader>
+      <AddNewPostModal addPost={addPost} />
+
       {PaginationComponent}
       <PostList posts={posts} editPost={editPost} deletePost={deletePost} />
       {PaginationComponent}
@@ -65,6 +73,7 @@ const mapDispatchToProps = {
   fetchPosts,
   deletePostAndFetch,
   editPostAndFetch,
+  addPosstAndFetch,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Postscontainer);
