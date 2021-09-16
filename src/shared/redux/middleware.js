@@ -28,11 +28,19 @@ const apiMiddleware = (store) => (next) => (action) => {
   const { isEndpointCall } = action;
 
   if (isEndpointCall) {
-    const { method, type, successType, failedType, reduxData = {} } = action;
+    const {
+      method,
+      type,
+      successType,
+      failedType,
+      reduxData = {},
+      data = {},
+    } = action;
     next({ type });
 
     return axios(`${basedURL}${action.endpoint}`, {
       method,
+      data,
     })
       .then((response) =>
         handleSuccess({ response, type: successType, next, reduxData })
