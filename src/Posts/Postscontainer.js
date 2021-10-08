@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import {
-  fetchPosts,
+  fetchPostsAndShowToast,
   deletePostAndFetch,
   editPostAndFetch,
   addPosstAndFetch,
@@ -10,11 +10,11 @@ import PostList from "./components/PostList";
 import { PostHeader } from "./components/styled.components";
 import Pagination from "./components/Pagination";
 import AddNewPostModal from "./components/AddPost/AddNewPostModal";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 function Postscontainer({
   posts,
-  fetching,
-  error,
-  fetchPosts,
+  fetchPostsAndShowToast,
   count,
   deletePostAndFetch,
   editPostAndFetch,
@@ -23,8 +23,8 @@ function Postscontainer({
   const [pagination, setPagination] = useState({ limit: 5, page: 1 });
 
   useEffect(() => {
-    fetchPosts(pagination);
-  }, [fetchPosts, pagination]);
+    fetchPostsAndShowToast(pagination, toast);
+  }, [fetchPostsAndShowToast, pagination]);
 
   const PaginationComponent = (
     <Pagination
@@ -35,19 +35,20 @@ function Postscontainer({
   );
 
   const deletePost = (id) => {
-    deletePostAndFetch(id, pagination);
+    deletePostAndFetch(id, pagination, toast);
   };
 
   const editPost = (postObject) => {
-    editPostAndFetch(postObject, pagination);
+    editPostAndFetch(postObject, pagination, toast);
   };
 
   const addPost = (postObject) => {
-    addPosstAndFetch(postObject, pagination);
+    addPosstAndFetch(postObject, pagination, toast);
   };
 
   return (
     <div>
+      <ToastContainer />
       <PostHeader>
         <h1>Posts</h1>
       </PostHeader>
@@ -70,7 +71,7 @@ const mapStateToProps = ({ posts, fetching, error, count }) => {
 };
 
 const mapDispatchToProps = {
-  fetchPosts,
+  fetchPostsAndShowToast,
   deletePostAndFetch,
   editPostAndFetch,
   addPosstAndFetch,

@@ -47,32 +47,64 @@ export const addPost = (postObject) => {
   };
 };
 
-export const addPosstAndFetch = (postObject, filter) => {
+export const addPosstAndFetch = (postObject, filter, toast) => {
   return (dispatch) => {
-    dispatch(addPost(postObject)).then((response) => {
-      if (response.status === 201) {
-        dispatch(fetchPosts(filter));
-      }
-    });
+    dispatch(addPost(postObject))
+      .then((response) => {
+        if (response.status === 201) {
+          dispatch(fetchPosts(filter));
+          toast.success("Add Successful ");
+        }
+      })
+      .catch(() => {
+        toast.error("Add Failed");
+      });
   };
 };
 
-export const editPostAndFetch = (postObject, filter) => {
+export const editPostAndFetch = (postObject, filter, toast) => {
   return (dispatch) => {
-    dispatch(editPost(postObject)).then((response) => {
-      if (response.status === 200) {
-        dispatch(fetchPosts(filter));
-      }
-    });
+    dispatch(editPost(postObject))
+      .then((response) => {
+        if (response.status === 200) {
+          dispatch(fetchPosts(filter));
+          toast.success("Edit Successful ");
+        }
+      })
+      .catch(() => {
+        toast.error("Edit to delete");
+      });
   };
 };
 
-export const deletePostAndFetch = (id, filter) => {
+export const deletePostAndFetch = (id, filter, toast) => {
   return (dispatch) => {
-    dispatch(deletePost(id)).then((response) => {
-      if (response.status === 200) {
-        dispatch(fetchPosts(filter));
+    dispatch(deletePost(id))
+      .then((response) => {
+        if (response.status === 200) {
+          dispatch(fetchPosts(filter));
+          toast.success("Delete successfully");
+        }
+      })
+      .catch(() => {
+        toast.error("Deletion Failed");
+      });
+  };
+};
+
+export const fetchPostsAndShowToast = (filter, toast) => {
+  return (dispatch) => {
+    toast.promise(
+      dispatch(fetchPosts(filter)),
+      {
+        pending: `load page ${filter.page}`,
+        success: "load success",
+        error: "load failed",
+      },
+      {
+        position: "top-center",
+        autoClose: 1000,
       }
-    });
+    );
   };
 };
