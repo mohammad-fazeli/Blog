@@ -19,6 +19,7 @@ function Postscontainer({
   deletePostAndFetch,
   editPostAndFetch,
   addPosstAndFetch,
+  fetching,
 }) {
   const [pagination, setPagination] = useState({ limit: 5, page: 1 });
 
@@ -55,7 +56,12 @@ function Postscontainer({
       <AddNewPostModal addPost={addPost} />
 
       {PaginationComponent}
-      <PostList posts={posts} editPost={editPost} deletePost={deletePost} />
+      <PostList
+        posts={posts}
+        fetching={fetching}
+        editPost={editPost}
+        deletePost={deletePost}
+      />
       {PaginationComponent}
     </div>
   );

@@ -2,6 +2,15 @@ import styled from "styled-components";
 
 export const PostListRoot = styled.div`
   padding: 20px;
+  .ReactLoading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    right: auto;
+    bottom: auto;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+  }
   .postItem {
     padding: 10px;
     margin: 10px;

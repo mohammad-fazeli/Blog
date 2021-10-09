@@ -94,17 +94,12 @@ export const deletePostAndFetch = (id, filter, toast) => {
 
 export const fetchPostsAndShowToast = (filter, toast) => {
   return (dispatch) => {
-    toast.promise(
-      dispatch(fetchPosts(filter)),
-      {
-        pending: `load page ${filter.page}`,
-        success: "load success",
-        error: "load failed",
-      },
-      {
-        position: "top-center",
-        autoClose: 1000,
-      }
-    );
+    dispatch(fetchPosts(filter))
+      .then()
+      .catch(() => {
+        toast.error("Failed to get information", {
+          position: "top-center",
+        });
+      });
   };
 };
